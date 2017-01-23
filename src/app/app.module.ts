@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { CONFIG_PROVIDERS } from './tokens';
 import { ContactsAppComponent } from './contacts.component';
 import { ContactsService } from './contacts.service';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -23,7 +24,7 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
     FlexLayoutModule.forRoot(),
     RouterModule.forRoot(APP_ROUTES)
   ],
-  providers: [ContactsService],
+  providers: [ContactsService, CONFIG_PROVIDERS],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
