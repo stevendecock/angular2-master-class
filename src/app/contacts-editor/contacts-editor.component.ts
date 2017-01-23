@@ -21,13 +21,17 @@ export class ContactsEditorComponent implements OnInit {
 
   save(contact : Contact) {
     this.contactsService.updateContact(contact)
-      .subscribe(res => {
+      .subscribe(() => {
         this.router.navigate(['/contacts', contact.id])
       });
   }
 
   cancel(contact : Contact) {
-    this.router.navigate(['/contacts', contact.id])
+    this.goToDetails(contact);
+  }
+
+  private goToDetails(contact: Contact) {
+    this.router.navigate(['/contacts', contact.id]);
   }
 
 }
