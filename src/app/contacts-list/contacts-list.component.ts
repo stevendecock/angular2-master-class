@@ -15,29 +15,7 @@ export class ContactsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contacts = this.contactsService.getContacts();
-  }
-
-  foo(index, contact) {
-    return contact.id;
-  }
-
-}
-
-@Component({
-  selector: 'trm-contacts-list',
-  templateUrl: './alternate-contacts-list.component.html',
-  styleUrls: ['./contacts-list.component.css']
-})
-export class AlternateContactsListComponent implements OnInit {
-
-  contacts : Contact[];
-
-  constructor(private contactsService: ContactsService) {
-  }
-
-  ngOnInit(): void {
-    this.contacts = this.contactsService.getContacts();
+    this.contactsService.getContacts().subscribe(contacts => this.contacts = contacts);
   }
 
   foo(index, contact) {
