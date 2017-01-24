@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from "rxjs";
+import { Observable } from 'rxjs/Observable';
+import { Subject } from "rxjs";
 
 @Component({
   selector: 'trm-contacts-list',
@@ -11,7 +11,7 @@ import {Subject} from "rxjs";
 })
 export class ContactsListComponent implements OnInit {
 
-  contacts : Observable<Array<Contact>>;
+  contacts : Array<Contact>;
   // terms$: $ is a convention, saying that this is s stream
   private terms$ = new Subject<string>();
 
@@ -19,19 +19,17 @@ export class ContactsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contacts = this.contactsService.getContacts();
     this.terms$
       .debounceTime(400)
       .distinctUntilChanged()
-      .subscribe(term => this.search(term));
+      .switchMap(term => this.contactsService.search(term))
+      .merge(this.contactsService.getContacts())
+      .subscribe(contacts => this.contacts = contacts)
+    ;
   }
 
   trackByContactId(index, contact) {
     return contact.id;
-  }
-
-  search(term: string) {
-    this.contacts = this.contactsService.search(term);
   }
 
 }
