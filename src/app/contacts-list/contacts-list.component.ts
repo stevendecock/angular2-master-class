@@ -11,7 +11,7 @@ import { Subject } from "rxjs";
 })
 export class ContactsListComponent implements OnInit {
 
-  contacts : Array<Contact>;
+  contacts : Observable<Array<Contact>>;
   // terms$: $ is a convention, saying that this is s stream
   private terms$ = new Subject<string>();
 
@@ -19,13 +19,7 @@ export class ContactsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.terms$
-      .debounceTime(400)
-      .distinctUntilChanged()
-      .switchMap(term => this.contactsService.search(term))
-      .merge(this.contactsService.getContacts())
-      .subscribe(contacts => this.contacts = contacts)
-    ;
+    this.contacts = this.contactsService.search(this.terms$, 400);
   }
 
   trackByContactId(index, contact) {
