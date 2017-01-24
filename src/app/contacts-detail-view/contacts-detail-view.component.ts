@@ -21,7 +21,9 @@ export class ContactsDetailViewComponent implements OnInit {
   }
 
   navigateToEditor(contact: Contact) {
-    this.router.navigate(['/contacts',contact.id,'edit']);
+    this.router.navigate(['edit'], {relativeTo: this.route});
+    // Alternatief:
+    // this.router.navigate(['/contacts',contact.id,'edit']);
   }
 
   navigateToList() {
