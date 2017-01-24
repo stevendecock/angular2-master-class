@@ -16,6 +16,7 @@ import { ContactsEditorComponent } from './contacts-editor/contacts-editor.compo
 import { ContactsDetailViewComponent } from './contacts-detail-view/contacts-detail-view.component';
 import { TabsComponent } from './tabs/tabs/tabs.component';
 import { TabComponent } from './tabs/tab/tab.component';
+import {EventBusService} from "./event-bus.service";
 
 @NgModule({
   declarations: [ContactsAppComponent, ContactsListComponent, ContactsDetailComponent, ContactsEditorComponent, ContactsDetailViewComponent, TabsComponent, TabComponent],
@@ -27,7 +28,7 @@ import { TabComponent } from './tabs/tab/tab.component';
     FlexLayoutModule.forRoot(),
     RouterModule.forRoot(APP_ROUTES)
   ],
-  providers: [ContactsService, CONFIG_PROVIDERS],
+  providers: [ContactsService, EventBusService, CONFIG_PROVIDERS],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
