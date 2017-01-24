@@ -12,6 +12,7 @@ import {Subject} from "rxjs";
 export class ContactsListComponent implements OnInit {
 
   contacts : Observable<Array<Contact>>;
+  // terms$: $ is a convention, saying that this is s stream
   private terms$ = new Subject<string>();
 
   constructor(private contactsService: ContactsService) {
