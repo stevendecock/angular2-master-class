@@ -1,6 +1,10 @@
 import {Injectable, Inject} from "@angular/core";
 import {CONTACT_DATA} from "./data/contact-data";
 import "rxjs/add/operator/map";
+import "rxjs/add/operator/debounceTime";
+import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/operator/switchMap";
+import "rxjs/add/operator/merge";
 import {Http} from "@angular/http";
 import {Contact} from "./models/contact";
 import {Observable} from "rxjs";
@@ -33,11 +37,13 @@ export class ContactsService {
     return terms
       .debounceTime(debounceMs)
       .distinctUntilChanged()
-      .switchMap(term =>
-        this.http.get(`${this.apiEndpoint}/search?text=${term}`)
-          .map(res => res.json().items)
-      )
-      .merge(this.getContacts());
+      .switchMap(this.rawSearch());
+  }
+
+  private rawSearch() {
+    return term =>
+      this.http.get(`${this.apiEndpoint}/search?text=${term}`)
+        .map(res => res.json().items);
   }
 
 }

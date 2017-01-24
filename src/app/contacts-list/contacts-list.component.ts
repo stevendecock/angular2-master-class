@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact';
 import { ContactsService } from '../contacts.service';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from "rxjs";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'trm-contacts-list',
@@ -19,7 +19,8 @@ export class ContactsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.contacts = this.contactsService.search(this.terms$, 400);
+    this.contacts = this.contactsService.search(this.terms$, 400)
+        .merge(this.contactsService.getContacts());
   }
 
   trackByContactId(index, contact) {
